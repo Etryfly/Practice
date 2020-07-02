@@ -7,7 +7,8 @@ namespace task_1
 {
     public class Fraction : IEquatable<Fraction>, IComparable<Fraction>, IComparable, ICloneable
     {
-        
+        public BigInteger up { get; private set; }
+        public BigInteger down { get; private set; }
         private BigInteger Gcd(BigInteger a, BigInteger b)
         {
             while (a != 0 && b != 0)
@@ -43,7 +44,7 @@ namespace task_1
             return Sum(left, right);
         }
 
-        public static Fraction Substraction(Fraction left, Fraction right)
+        public static Fraction Subtraction(Fraction left, Fraction right)
         {
             right.up *= -1;
             return Sum(left, right);
@@ -51,7 +52,7 @@ namespace task_1
         
         public static Fraction operator -(Fraction left, Fraction right)
         {
-            return Substraction(left, right);
+            return Subtraction(left, right);
         }
 
         public static Fraction Multiply(Fraction left, Fraction right)
@@ -128,26 +129,26 @@ namespace task_1
         public string ToDecimalString(int signs)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(BigInteger.Divide(up, down));
-            up = BigInteger.Remainder(up, down);
+            BigInteger remainder = up;
+            sb.Append(BigInteger.Divide(remainder, down));
+            remainder = BigInteger.Remainder(remainder, down);
             sb.Append(",");
             
             for (int i = 0; i < signs; i++)
             {
-                if (up < down)
+                if (remainder < down)
                 {
-                    up *= 10;
+                    remainder *= 10;
                 }
-                sb.Append(up / down);
-                up = BigInteger.Remainder(up, down);
+                sb.Append(remainder / down);
+                remainder = BigInteger.Remainder(remainder, down);
                 
             }
 
             return sb.ToString();
         }
 
-        public BigInteger up { get; private set; }
-        public BigInteger down { get; private set; }
+        
 
         public bool Equals(Fraction other)
         {
@@ -183,7 +184,7 @@ namespace task_1
             return 0;
         }
         
-        public int CompareTo(object? obj)
+        public int CompareTo(object obj)
         {
             if (obj is null) throw new ArgumentNullException();
             if (obj is Fraction)
