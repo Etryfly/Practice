@@ -5,7 +5,7 @@ namespace task_4
 {
     public class MiddleRectangle : IIntegrable
     {
-        public Fraction Integrate(IIntegrable.Function func, Fraction left, Fraction right, Fraction eps)
+        public Fraction Integrate(IIntegrable.Function func, Fraction left, Fraction right, Fraction eps, out BigInteger n)
         {
             BigInteger N = 1;
             Fraction prevY = Integrate(func, left, right, N);
@@ -19,6 +19,7 @@ namespace task_4
                 
             }
 
+            n = N;
             return Y;
         }
         
